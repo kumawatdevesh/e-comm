@@ -25,7 +25,7 @@ pipeline {
     stage("test") {
       
       steps {
-        echo "${SERVER_CREDENTIALS}"
+        sh "npm install"
         echo "testing the application..."
       }
     }
