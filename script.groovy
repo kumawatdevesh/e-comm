@@ -1,9 +1,16 @@
 def buildApp() {
-    echo "building the application..."
+    sh "npm install"
 }
 
 def testApp() {
-    echo "testing the application..."
+    echo "building the docker image"
+    withCredentials([
+        usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'PASS', usernameVariable: 'USER')
+    ]) {
+        sh "docker build -t e-comm ."
+        sh "docker login --username $USER --password-stdin"
+        sh "docker push e-comm"
+    }
 }
 
 def deployApp() {
