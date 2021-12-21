@@ -8,7 +8,7 @@ def testApp() {
         usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'PASS', usernameVariable: 'USER')
     ]) {
         sh "docker build -t e-comm ."
-        sh "echo $PASS | docker login -u $USER --password-stdin"
+        sh "echo $PASS | docker login -u $USER -p $PASS docker.io"
         sh "docker push e-comm"
     }
 }
