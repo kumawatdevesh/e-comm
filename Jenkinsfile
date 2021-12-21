@@ -1,16 +1,21 @@
 pipeline {
     agent any 
 
+    environment {
+        NEW_VERSION="1.2.0"
+        SERVER_CREDENTIALS=credentials('61211a2a-29fa-49e6-b546-2e92fe45f5ad')
+    }
+
     stages {
         stage("build") {
             steps {
-                echo "building the applictaion..."
+                echo "building the applictaion... ${NEW_VERSION}"
             }
         }
 
         stage("test") {
             steps {
-                echo "testing the application..."
+                echo "testing the application... and ${SERVER_CREDENTIALS}"
             }
         }
 
