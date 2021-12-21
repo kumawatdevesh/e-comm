@@ -3,6 +3,10 @@ def gv
 pipeline {
     agent any 
 
+    tools {
+        npm 'NodeJS'
+    }
+
     environment {
         NEW_VERSION="1.2.0"
         SERVER_CREDENTIALS=credentials('61211a2a-29fa-49e6-b546-2e92fe45f5ad')
@@ -25,12 +29,6 @@ pipeline {
         }
 
         stage("build") {
-            when {
-                expression {
-                    env.BRANCH_NAME == 'dev'
-                }
-            }
-
             steps {
                 script {
                     gv.buildApp()
@@ -47,16 +45,6 @@ pipeline {
         }
 
         stage("deploy") {
-
-            input {
-                message "Select environment to deploy..."
-                ok "Done"
-
-                parameters {
-                    choice(name: 'ENV', choices: ['dev', 'test', 'prod'], description: "Env to deploy")
-                }
-            }
-
             steps {
                 script {
                     gv.deployApp()
